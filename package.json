@@ -1,14 +1,16 @@
 {
-  "name": "marked-extension-template",
+  "name": "marked-emoji",
   "version": "0.0.0",
-  "description": "marked extension template",
+  "description": "Add text emoji support to marked",
   "main": "./lib/index.cjs",
   "module": "./src/index.js",
   "browser": "./lib/index.umd.js",
   "type": "module",
   "keywords": [
     "marked",
-    "extension"
+    "extension",
+    "emoji",
+    "emojis"
   ],
   "files": [
     "lib/",
@@ -28,20 +30,27 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/markedjs/marked-extension-template.git"
+    "url": "git+https://github.com/UziTech/marked-emoji.git"
   },
   "author": "Tony Brix <Tony@Brix.ninja> (https://Tony.Brix.ninja)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/markedjs/marked-extension-template/issues"
+    "url": "https://github.com/UziTech/marked-emoji/issues"
   },
-  "homepage": "https://github.com/markedjs/marked-extension-template#readme",
+  "homepage": "https://github.com/UziTech/marked-emoji#readme",
   "peerDependencies": {
-    "marked": "^4.2.4"
+    "marked": "^4.2.4",
+    "@octokit/rest": "^19.0.5"
+  },
+  "peerDependenciesMeta": {
+    "@octokit/rest": {
+      "optional": true
+    }
   },
   "devDependencies": {
-    "@babel/core": "^7.20.5",
+    "@babel/core": "^7.20.7",
     "@babel/preset-env": "^7.20.2",
+    "@octokit/rest": "^19.0.5",
     "@semantic-release/changelog": "^6.0.2",
     "@semantic-release/commit-analyzer": "^9.0.2",
     "@semantic-release/git": "^10.0.1",
@@ -56,7 +65,7 @@
     "eslint-plugin-promise": "^6.1.1",
     "jest-cli": "^29.3.1",
     "marked": "^4.2.4",
-    "rollup": "^3.7.5",
+    "rollup": "^3.8.0",
     "semantic-release": "^19.0.5"
   }
 }
