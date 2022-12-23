@@ -1,17 +1,17 @@
 const defaultOptions = {
   // emojis: {}, required
-  exclude: null,
   unicode: false
 };
 
 export function markedEmoji(options) {
-  if (!options.emojis) {
-    throw new Error('Must provide emojis to markedEmoji');
-  }
   options = {
     ...defaultOptions,
     ...options
   };
+
+  if (!options.emojis) {
+    throw new Error('Must provide emojis to markedEmoji');
+  }
 
   return {
     extensions: [{
@@ -30,18 +30,6 @@ export function markedEmoji(options) {
 
         if (!emoji) {
           return;
-        }
-
-        if (options.exclude) {
-          if (Array.isArray(options.exclude)) {
-            if (options.exclude.includes(name)) {
-              return;
-            }
-          } else if (options.exclude instanceof Set) {
-            if (options.exclude.has(name)) {
-              return;
-            }
-          }
         }
 
         return {

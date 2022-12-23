@@ -23,8 +23,8 @@
     }
   },
   "scripts": {
-    "test": "jest --verbose",
-    "test:cover": "jest --coverage",
+    "test": "node --experimental-vm-modules ./node_modules/jest-cli/bin/jest.js --verbose",
+    "test:cover": "node --experimental-vm-modules ./node_modules/jest-cli/bin/jest.js --coverage",
     "lint": "eslint .",
     "build": "rollup -c rollup.config.js"
   },
@@ -39,17 +39,9 @@
   },
   "homepage": "https://github.com/UziTech/marked-emoji#readme",
   "peerDependencies": {
-    "marked": "^4.2.4",
-    "@octokit/rest": "^19.0.5"
-  },
-  "peerDependenciesMeta": {
-    "@octokit/rest": {
-      "optional": true
-    }
+    "marked": "^4.2.4"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.7",
-    "@babel/preset-env": "^7.20.2",
     "@octokit/rest": "^19.0.5",
     "@semantic-release/changelog": "^6.0.2",
     "@semantic-release/commit-analyzer": "^9.0.2",
@@ -57,7 +49,6 @@
     "@semantic-release/github": "^8.0.7",
     "@semantic-release/npm": "^9.0.1",
     "@semantic-release/release-notes-generator": "^10.0.3",
-    "babel-jest": "^29.3.1",
     "eslint": "^8.30.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.26.0",

@@ -1,14 +1,3 @@
-# TODO:
-
-- [ ] Replace information in `/README.md`
-- [ ] Replace name in `/rollup.config.js`
-- [ ] Replace information in `/package.json`
-- [ ] Write extension in `/src/index.js`
-- [ ] Write tests in `/spec/index.test.js`
-- [ ] Uncomment release in `/.github/workflows/main.yml`
-
-<!-- Delete this line and above -->
-
 # marked-emoji
 Parse `:emoji:` as emoji either unicode characters or images. You have to provide your own emojis. The example uses the list of emojis provided by `@octokit/rest` but you can also just create your own list from any source.
 
@@ -40,7 +29,6 @@ const emojis = res.data;
 
 const options = {
 	emojis,
-	exclude: null,
 	unicode: false,
 };
 
@@ -55,6 +43,5 @@ marked.parse("I :heart: marked! :tada:");
 | option | default | description |
 |--------|---------|-------------|
 | emojis | required | An object with keys as emoji name and values as emoji. The values are assumed to be image urls (as returned by Octokit) unless `unicode` option is `true`. |
-| exclude | `null` | An Array or Set containing any emoji names that you want to exclude. |
 | unicode | `false` | Whether `emojis` values are image urls (`false`) or unicode characters (`true`) |
 
