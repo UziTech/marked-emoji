@@ -1,21 +1,17 @@
 import { marked } from 'marked';
 import { markedEmoji } from '../src/index.js';
 import { Octokit } from '@octokit/rest';
-import { readFile } from 'fs/promises';
+import { readFile } from 'node:fs/promises';
+
+const unicodeEmojis = JSON.parse(
+  await readFile(new URL('./fixtures/emojis.json', import.meta.url))
+);
+
+const octokit = new Octokit();
+const res = await octokit.rest.emojis.get();
+const octokitEmojis = res.data;
 
 describe('marked-emoji', () => {
-  let unicodeEmojis, octokitEmojis;
-
-  beforeAll(async() => {
-    unicodeEmojis = JSON.parse(
-      await readFile(new URL('./fixtures/emojis.json', import.meta.url))
-    );
-
-    const octokit = new Octokit();
-    const res = await octokit.rest.emojis.get();
-    octokitEmojis = res.data;
-  });
-
   beforeEach(async() => {
     marked.setOptions(marked.getDefaults());
   });
@@ -39,7 +35,7 @@ describe('marked-emoji', () => {
       emojis: unicodeEmojis,
       unicode: true
     }));
-    expect(marked(':invalidemoji:')).toBe('<p>:invalidemoji:</p>\n');
+    expect(marked('this is an :invalidemoji:')).toBe('<p>this is an :invalidemoji:</p>\n');
   });
 
   test('octokit emojis', () => {

@@ -20,8 +20,10 @@ const octokit = new Octokit();
 const res = await octokit.rest.emojis.get();
 /*
  * {
+ *   ...
  *   "heart": "https://...",
- *   "tada": "https://..."
+ *   ...
+ *   "tada": "https://...",
  *   ...
  * }
  */
@@ -32,7 +34,7 @@ const options = {
 	unicode: false,
 };
 
-marked.use(await markedEmoji(options));
+marked.use(markedEmoji(options));
 
 marked.parse("I :heart: marked! :tada:");
 // <p>I ❤️ marked! 🎉</p>
