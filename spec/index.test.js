@@ -1,13 +1,35 @@
 import { marked } from 'marked';
 import { markedEmoji } from '../src/index.js';
 import { Octokit } from '@octokit/rest';
+import { throttling } from '@octokit/plugin-throttling';
 import { readFile } from 'node:fs/promises';
 
 const unicodeEmojis = JSON.parse(
   await readFile(new URL('./fixtures/emojis.json', import.meta.url))
 );
 
-const octokit = new Octokit();
+const MyOctokit = Octokit.plugin(throttling);
+const octokit = new MyOctokit({
+  throttle: {
+    onRateLimit: (retryAfter, options) => {
+      octokit.log.warn(
+        `Request quota exhausted for request ${options.method} ${options.url}`
+      );
+
+      // Retry five times after hitting a rate limit error, then give up
+      if (options.request.retryCount <= 5) {
+        console.log(`Retrying after ${retryAfter} seconds!`);
+        return true;
+      }
+    },
+    onSecondaryRateLimit: (retryAfter, options, octokit) => {
+      // does not retry, only logs a warning
+      octokit.log.warn(
+        `Secondary quota detected for request ${options.method} ${options.url}`
+      );
+    }
+  }
+});
 const res = await octokit.rest.emojis.get();
 const octokitEmojis = res.data;
 
