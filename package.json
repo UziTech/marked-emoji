@@ -39,7 +39,7 @@
   },
   "homepage": "https://github.com/UziTech/marked-emoji#readme",
   "peerDependencies": {
-    "marked": "^4.3.0"
+    "marked": "^4 || ^5"
   },
   "devDependencies": {
     "@octokit/plugin-throttling": "^5.0.1",
