@@ -1,6 +1,7 @@
 const defaultOptions = {
   // emojis: {}, required
-  unicode: false
+  unicode: false,
+  name: 'emoji'
 };
 
 export function markedEmoji(options) {
@@ -15,7 +16,7 @@ export function markedEmoji(options) {
 
   return {
     extensions: [{
-      name: 'emoji',
+      name: options.name,
       level: 'inline',
       start(src) { return src.indexOf(':'); },
       tokenizer(src, tokens) {
@@ -33,7 +34,7 @@ export function markedEmoji(options) {
         }
 
         return {
-          type: 'emoji',
+          type: options.name,
           raw: match[0],
           name,
           emoji
