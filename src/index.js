@@ -17,7 +17,7 @@ export function markedEmoji(options) {
     extensions: [{
       name: 'emoji',
       level: 'inline',
-      start(src) { return src.indexOf(':'); },
+      start(src) { return src.match(/:(.+?):/)?.index; },
       tokenizer(src, tokens) {
         const rule = /^:(.+?):/;
         const match = rule.exec(src);
