@@ -24,8 +24,9 @@
     }
   },
   "scripts": {
-    "test": "node --experimental-vm-modules ./node_modules/jest-cli/bin/jest.js --verbose",
+    "test": "node --experimental-vm-modules ./node_modules/jest-cli/bin/jest.js --verbose && tsd -t src/index.d.ts -f types_test/index.test-d.ts",
     "test:cover": "node --experimental-vm-modules ./node_modules/jest-cli/bin/jest.js --coverage",
+    "test:types": "tsd -t src/index.d.ts -f types_test/index.test-d.ts",
     "lint": "eslint .",
     "build": "rollup -c rollup.config.js"
   },
@@ -60,6 +61,14 @@
     "jest-cli": "^29.5.0",
     "marked": "^5.1.0",
     "rollup": "^3.25.0",
-    "semantic-release": "^21.0.5"
+    "semantic-release": "^21.0.5",
+    "tsd": "^0.28.1"
+  },
+  "tsd": {
+    "compilerOptions": {
+      "paths": {
+        "marked-emoji": ["./src"]
+      }
+    }
   }
 }
