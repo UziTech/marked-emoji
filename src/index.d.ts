@@ -8,7 +8,7 @@ declare module 'marked-emoji' {
          * assumed to be image urls (as returned by Octokit) unless `unicode` option
          * is `true`.
          */
-        emojis: { [ k: string ]: string };
+        emojis: Record<string, string>;
         /**
          * Whether `emojis` values are image urls (`false`) or unicode characters (`true`)
          */
