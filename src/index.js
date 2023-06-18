@@ -13,7 +13,7 @@ export function markedEmoji(options) {
     throw new Error('Must provide emojis to markedEmoji');
   }
 
-  const emojiNames = Object.keys(options.emojis).map(e => e.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join("|");
+  const emojiNames = Object.keys(options.emojis).map(e => e.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|');
   const emojiRegex = new RegExp(`:(${emojiNames}):`);
   const tokenizerRule = new RegExp(`^${emojiRegex.source}`);
 
@@ -30,10 +30,6 @@ export function markedEmoji(options) {
 
         const name = match[1];
         const emoji = options.emojis[name];
-
-        if (!emoji) {
-          return;
-        }
 
         return {
           type: 'emoji',
