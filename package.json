@@ -5,6 +5,7 @@
   "main": "./lib/index.cjs",
   "module": "./src/index.js",
   "browser": "./lib/index.umd.js",
+  "types": "./src/index.d.ts",
   "type": "module",
   "keywords": [
     "marked",
@@ -25,6 +26,7 @@
   "scripts": {
     "test": "node --experimental-vm-modules ./node_modules/jest-cli/bin/jest.js --verbose",
     "test:cover": "node --experimental-vm-modules ./node_modules/jest-cli/bin/jest.js --coverage",
+    "test:types": "tsd -t src/index.d.ts -f types_test/index.test-d.ts",
     "lint": "eslint .",
     "build": "rollup -c rollup.config.js"
   },
@@ -50,6 +52,7 @@
     "@semantic-release/github": "^9.0.3",
     "@semantic-release/npm": "^10.0.4",
     "@semantic-release/release-notes-generator": "^11.0.3",
+    "@types/marked": "^5.0.0",
     "eslint": "^8.43.0",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-import": "^2.27.5",
@@ -58,6 +61,14 @@
     "jest-cli": "^29.5.0",
     "marked": "^5.1.0",
     "rollup": "^3.25.2",
-    "semantic-release": "^21.0.5"
+    "semantic-release": "^21.0.5",
+    "tsd": "^0.28.1"
+  },
+  "tsd": {
+    "compilerOptions": {
+      "paths": {
+        "marked-emoji": ["./src"]
+      }
+    }
   }
 }
