@@ -24,7 +24,7 @@
     }
   },
   "scripts": {
-    "test": "node --experimental-vm-modules ./node_modules/jest-cli/bin/jest.js --verbose && tsd -t src/index.d.ts -f types_test/index.test-d.ts",
+    "test": "node --experimental-vm-modules ./node_modules/jest-cli/bin/jest.js --verbose",
     "test:cover": "node --experimental-vm-modules ./node_modules/jest-cli/bin/jest.js --coverage",
     "test:types": "tsd -t src/index.d.ts -f types_test/index.test-d.ts",
     "lint": "eslint .",
