@@ -13,24 +13,23 @@ export function markedEmoji(options) {
     throw new Error('Must provide emojis to markedEmoji');
   }
 
+  const emojiNames = Object.keys(options.emojis).map(e => e.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|');
+  const emojiRegex = new RegExp(`:(${emojiNames}):`);
+  const tokenizerRule = new RegExp(`^${emojiRegex.source}`);
+
   return {
     extensions: [{
       name: 'emoji',
       level: 'inline',
-      start(src) { return src.indexOf(':'); },
+      start(src) { return src.match(emojiRegex)?.index; },
       tokenizer(src, tokens) {
-        const rule = /^:(.+?):/;
-        const match = rule.exec(src);
+        const match = tokenizerRule.exec(src);
         if (!match) {
           return;
         }
 
         const name = match[1];
         const emoji = options.emojis[name];
-
-        if (!emoji) {
-          return;
-        }
 
         return {
           type: 'emoji',
