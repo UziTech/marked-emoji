@@ -29,17 +29,32 @@ export function markedEmoji(options) {
         }
 
         const name = match[1];
-        const emoji = options.emojis[name];
+        let emoji = options.emojis[name];
+        let unicode = options.unicode;
+
+        if (typeof emoji !== 'string') {
+          if (typeof emoji.char === 'string') {
+            emoji = emoji.char;
+            unicode = true;
+          } else if (typeof emoji.url === 'string') {
+            emoji = emoji.url;
+            unicode = false;
+          } else {
+            // invalid emoji
+            return;
+          }
+        }
 
         return {
           type: 'emoji',
           raw: match[0],
           name,
-          emoji
+          emoji,
+          unicode
         };
       },
       renderer(token) {
-        if (options.unicode) {
+        if (token.unicode) {
           return token.emoji;
         } else {
           return `<img alt="${token.name}" src="${token.emoji}"${this.parser.options.xhtml ? ' /' : ''}>`;

@@ -92,4 +92,25 @@ describe('marked-emoji', () => {
     marked.use({ gfm: true });
     expect(marked('autolink https://github.com/UziTech/marked-emoji/ https://github.com/UziTech/marked-emoji/')).toBe('<p>autolink <a href="https://github.com/UziTech/marked-emoji/">https://github.com/UziTech/marked-emoji/</a> <a href="https://github.com/UziTech/marked-emoji/">https://github.com/UziTech/marked-emoji/</a></p>\n');
   });
+
+  test('unicode and url emojis', () => {
+    marked.use(markedEmoji({
+      emojis: {
+        heart: '❤️',
+        heartUrl: { url: 'https://example.com/heart.png' },
+        heartUnicode: { char: '💖' }
+      },
+      unicode: true
+    }));
+    marked.use({ gfm: true });
+    expect(marked(':heart: :heartUrl: :heartUnicode:')).toBe('<p>❤️ <img alt="heartUrl" src="https://example.com/heart.png"> 💖</p>\n');
+  });
+
+  test('invalid emoji object', () => {
+    marked.use(markedEmoji({
+      emojis: { test: { nothing: '' } }
+    }));
+    marked.use({ gfm: true });
+    expect(marked(':test:')).toBe('<p>:test:</p>\n');
+  });
 });

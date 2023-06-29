@@ -9,12 +9,17 @@ expectError(markedEmoji({emojis: []}));
 
 // No error because keys are always coerced to string
 // cf. https://www.typescriptlang.org/docs/handbook/2/keyof-types.html
-markedEmoji({emojis: {0: '❤️'}})
+markedEmoji({emojis: {0: '❤️'}});
 
 // Valid arguments
-markedEmoji({emojis: {heart: '❤️'}})
-markedEmoji({emojis: {heart: '❤️'}, unicode: true})
-markedEmoji({emojis: {heart: '❤️'}, unicode: false})
-markedEmoji({emojis: {heart: '❤️'}, unicode: undefined})
+markedEmoji({emojis: {heart: 'https://example.com/heart.png'}});
+markedEmoji({emojis: {heart: '❤️'}, unicode: true});
+markedEmoji({emojis: {heart: 'https://example.com/heart.png'}, unicode: false});
+markedEmoji({emojis: {heart: 'https://example.com/heart.png'}, unicode: undefined});
 // This works because TypeScript can't exclude empty object when keys are dynamic
-markedEmoji({emojis: {}})
+markedEmoji({emojis: {}});
+// emoji object
+markedEmoji({emojis: {heart: {char: '❤️'}}});
+markedEmoji({emojis: {heart: {url: 'https://example.com/heart.png'}}});
+expectError(markedEmoji({emojis: {heart: {url: 'https://example.com/heart.png', char: '❤️'}}}));
+markedEmoji({emojis: {heartUrl: {url: 'https://example.com/heart.png'}, heartUnicode: {char: '❤️'}}});
