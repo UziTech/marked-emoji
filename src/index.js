@@ -1,29 +1,29 @@
 const defaultOptions = {
   // emojis: {}, required
-  unicode: false,
+  unicode: false
 };
 
 export function markedEmoji(options) {
   options = {
     ...defaultOptions,
-    ...options,
+    ...options
   };
 
   if (!options.emojis) {
-    throw new Error("Must provide emojis to markedEmoji");
+    throw new Error('Must provide emojis to markedEmoji');
   }
 
   const emojiNames = Object.keys(options.emojis)
-    .map((e) => e.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
-    .join("|");
+    .map((e) => e.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+    .join('|');
   const emojiRegex = new RegExp(`:(${emojiNames}):`);
   const tokenizerRule = new RegExp(`^${emojiRegex.source}`);
 
   return {
     extensions: [
       {
-        name: "emoji",
-        level: "inline",
+        name: 'emoji',
+        level: 'inline',
         start(src) {
           return src.match(emojiRegex)?.index;
         },
@@ -37,11 +37,11 @@ export function markedEmoji(options) {
           let emoji = options.emojis[name];
           let unicode = options.unicode;
 
-          if (typeof emoji !== "string") {
-            if (typeof emoji.char === "string") {
+          if (typeof emoji !== 'string') {
+            if (typeof emoji.char === 'string') {
               emoji = emoji.char;
               unicode = true;
-            } else if (typeof emoji.url === "string") {
+            } else if (typeof emoji.url === 'string') {
               emoji = emoji.url;
               unicode = false;
             } else {
@@ -51,11 +51,11 @@ export function markedEmoji(options) {
           }
 
           return {
-            type: "emoji",
+            type: 'emoji',
             raw: match[0],
             name,
             emoji,
-            unicode,
+            unicode
           };
         },
         renderer(token) {
@@ -64,10 +64,10 @@ export function markedEmoji(options) {
           } else {
             return `<img alt="${token.name}" class="marked-emoji" src="${
               token.emoji
-            }"${this.parser.options.xhtml ? " /" : ""}>`;
+            }"${this.parser.options.xhtml ? ' /' : ''}>`;
           }
-        },
-      },
-    ],
+        }
+      }
+    ]
   };
 }
