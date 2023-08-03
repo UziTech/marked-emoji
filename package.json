@@ -41,7 +41,7 @@
   },
   "homepage": "https://github.com/UziTech/marked-emoji#readme",
   "peerDependencies": {
-    "marked": "^4 || ^5"
+    "marked": "^6.0.0"
   },
   "devDependencies": {
     "@octokit/plugin-throttling": "^7.0.0",
@@ -59,7 +59,7 @@
     "eslint-plugin-n": "^16.0.1",
     "eslint-plugin-promise": "^6.1.1",
     "jest-cli": "^29.6.2",
-    "marked": "^5.1.2",
+    "marked": "^6.0.0",
     "rollup": "^3.27.0",
     "semantic-release": "^21.0.7",
     "tsd": "^0.28.1"
