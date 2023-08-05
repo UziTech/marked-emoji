@@ -33,5 +33,5 @@ declare module 'marked-emoji' {
      * @param options Options of the extension
      * @return A MarkedExtension to be passed to `marked.use()`
      */
-    export function markedEmoji(options: MarkedEmojiOptions): import('marked').marked.MarkedExtension;
+    export function markedEmoji(options: MarkedEmojiOptions): import('marked').MarkedExtension;
   }
