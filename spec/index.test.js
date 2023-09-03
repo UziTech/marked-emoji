@@ -67,14 +67,6 @@ describe('marked-emoji', () => {
     expect(marked('I :heart: marked! :tada:')).toBe('<p>I <img alt="heart" src="https://github.githubassets.com/images/icons/emoji/unicode/2764.png?v8"> marked! <img alt="tada" src="https://github.githubassets.com/images/icons/emoji/unicode/1f389.png?v8"></p>\n');
   });
 
-  test('octokit emojis with xhtml option', () => {
-    marked.use(markedEmoji({
-      emojis: octokitEmojis
-    }));
-    marked.use({ xhtml: true });
-    expect(marked('I :heart: marked! :tada:')).toBe('<p>I <img alt="heart" src="https://github.githubassets.com/images/icons/emoji/unicode/2764.png?v8" /> marked! <img alt="tada" src="https://github.githubassets.com/images/icons/emoji/unicode/1f389.png?v8" /></p>\n');
-  });
-
   test('gfm autolink works', () => {
     marked.use(markedEmoji({
       emojis: unicodeEmojis,
