@@ -45,5 +45,5 @@ marked.parse("I :heart: marked! :tada:");
 | option | default | description |
 |--------|---------|-------------|
 | emojis | required | An object with keys as emoji name and values as emoji. The values are assumed to be image urls (as returned by Octokit) unless `unicode` option is `true`. Values can also be an object with a `url` property or `char` property to allow unicode and url emoji at the same time. |
-| unicode | `false` | Whether `emojis` values are image urls (`false`) or unicode characters (`true`) |
+| unicode | `false` | Whether `emojis` values are image urls (`false`) or unicode characters (`true`). If set to `true`, an `<img>` element with class `marked-emoji-img` will be generated. |
 
