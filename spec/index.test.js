@@ -64,7 +64,7 @@ describe('marked-emoji', () => {
     marked.use(markedEmoji({
       emojis: octokitEmojis
     }));
-    expect(marked('I :heart: marked! :tada:')).toBe('<p>I <img alt="heart" src="https://github.githubassets.com/images/icons/emoji/unicode/2764.png?v8"> marked! <img alt="tada" src="https://github.githubassets.com/images/icons/emoji/unicode/1f389.png?v8"></p>\n');
+    expect(marked('I :heart: marked! :tada:')).toBe('<p>I <img alt="heart" src="https://github.githubassets.com/images/icons/emoji/unicode/2764.png?v8" class="marked-emoji-img"> marked! <img alt="tada" src="https://github.githubassets.com/images/icons/emoji/unicode/1f389.png?v8" class="marked-emoji-img"></p>\n');
   });
 
   test('gfm autolink works', () => {
@@ -95,7 +95,7 @@ describe('marked-emoji', () => {
       unicode: true
     }));
     marked.use({ gfm: true });
-    expect(marked(':heart: :heartUrl: :heartUnicode:')).toBe('<p>❤️ <img alt="heartUrl" src="https://example.com/heart.png"> 💖</p>\n');
+    expect(marked(':heart: :heartUrl: :heartUnicode:')).toBe('<p>❤️ <img alt="heartUrl" src="https://example.com/heart.png" class="marked-emoji-img"> 💖</p>\n');
   });
 
   test('invalid emoji object', () => {
