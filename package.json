@@ -44,7 +44,7 @@
     "marked": ">=4 <13"
   },
   "devDependencies": {
-    "@octokit/plugin-throttling": "^9.0.0",
+    "@octokit/plugin-throttling": "^9.0.3",
     "@octokit/rest": "^20.0.2",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/commit-analyzer": "^11.1.0",
