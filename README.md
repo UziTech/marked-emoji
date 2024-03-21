@@ -83,7 +83,7 @@ marked.parse("I :heart: marked! :tada:");
 | option | default | description |
 |--------|---------|-------------|
 | emojis | required | An object with keys as emoji name and values as emoji. |
-| renderer | null | A function that takes a token object and renders a string. (e.g. `(token) => token.emoji`) |
+| renderer | ``(token) => `<img alt="${token.name}" src="${token.emoji}" class="marked-emoji-img">` `` | A function that takes a token object and renders a string. |
 
 ## `token`
 
