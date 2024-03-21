@@ -82,7 +82,7 @@ marked.parse("I :heart: marked! :tada:");
 
 | option | default | description |
 |--------|---------|-------------|
-| emojis | required | An object with keys as emoji name and values as emoji. The values are assumed to be image urls (as returned by Octokit) unless `unicode` option is `true`. Values can also be an object with a `url` property or `char` property to allow unicode and url emoji at the same time. |
+| emojis | required | An object with keys as emoji name and values as emoji. The values are assumed to be image urls (as returned by Octokit) unless `unicode` option is `true`. |
 | renderer | null | A function that takes a token object and renders a string. (e.g. `(token) => token.emoji`) |
 
 ## `token`

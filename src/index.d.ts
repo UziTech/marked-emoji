@@ -18,7 +18,6 @@ declare module 'marked-emoji' {
         raw: string;
         name: string;
         emoji: string;
-        unicode: boolean;
     }
 
     /**

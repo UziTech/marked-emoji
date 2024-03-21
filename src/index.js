@@ -31,9 +31,9 @@ export function markedEmoji(options) {
 
         const name = match[1];
         let emoji = options.emojis[name];
-        let unicode = options.unicode;
+        let unicode = options.renderer ? undefined : options.unicode;
 
-        if (typeof emoji !== 'string') {
+        if (typeof emoji !== 'string' && !options.renderer) {
           if (typeof emoji.char === 'string') {
             emoji = emoji.char;
             unicode = true;
