@@ -11,6 +11,17 @@ declare module 'marked-emoji' {
     }
 
     /**
+     * Token sent to the renderer
+     */
+    interface EmojiToken {
+        type: 'emoji';
+        raw: string;
+        name: string;
+        emoji: string;
+        unicode: boolean;
+    }
+
+    /**
      * Options for configuring the marked-emojis extension
      */
     interface MarkedEmojiOptions {
@@ -21,11 +32,19 @@ declare module 'marked-emoji' {
          * to allow unicode and url emoji at the same time.
          */
         emojis: Record<string, string | EmojiObject>;
+
         /**
          * Whether `emojis` values are image urls (`false`) or unicode characters (`true`)
+         * @deprecated use `renderer: (token) => token.emoji` option to return the unicode character
          */
         unicode?: boolean;
+
+        /**
+         * Renderer function to render emoji
+         */
+        renderer?: (token: EmojiToken) => string;
     }
+
     /**
      * Configures a marked extension to parse `:emoji:` as emoji either unicode
      * characters or images.

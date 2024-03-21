@@ -105,4 +105,31 @@ describe('marked-emoji', () => {
     marked.use({ gfm: true });
     expect(marked(':test:')).toBe('<p>:test:</p>\n');
   });
+
+  test('renderer option', () => {
+    marked.use(markedEmoji({
+      emojis: unicodeEmojis,
+      renderer: (token) => token.emoji
+    }));
+    expect(marked('I :heart: marked! :tada:')).toBe('<p>I ❤️ marked! 🎉</p>\n');
+  });
+
+  test('image renderer', () => {
+    marked.use(markedEmoji({
+      emojis: octokitEmojis,
+      renderer: (token) => `<img alt="${token.name}" src="${token.emoji}" class="img-class">`
+    }));
+    expect(marked('I :heart: marked! :tada:')).toBe('<p>I <img alt="heart" src="https://github.githubassets.com/images/icons/emoji/unicode/2764.png?v8" class="img-class"> marked! <img alt="tada" src="https://github.githubassets.com/images/icons/emoji/unicode/1f389.png?v8" class="img-class"></p>\n');
+  });
+
+  test('font-awesome renderer', () => {
+    marked.use(markedEmoji({
+      emojis: {
+        heart: 'fa-heart',
+        tada: 'fa-tada'
+      },
+      renderer: (token) => `<i class="fa-solid ${token.emoji}"></i>`
+    }));
+    expect(marked('I :heart: marked! :tada:')).toBe('<p>I <i class="fa-solid fa-heart"></i> marked! <i class="fa-solid fa-tada"></i></p>\n');
+  });
 });

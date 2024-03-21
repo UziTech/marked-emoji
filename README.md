@@ -5,6 +5,8 @@ The `emojis` option is required.
 
 # Usage
 
+## Octokit example
+
 ```js
 import {marked} from "marked";
 import {markedEmoji} from "marked-emoji";
@@ -31,7 +33,25 @@ const emojis = res.data;
 
 const options = {
 	emojis,
-	unicode: false,
+	renderer: (token) => `<img alt="${token.name}" src="${token.emoji}" class="marked-emoji-img">`
+};
+
+marked.use(markedEmoji(options));
+
+marked.parse("I :heart: marked! :tada:");
+// <p>I <img alt="heart" src="https://..." class="marked-emoji-img"> marked! <img alt="tada" src="https://..." class="marked-emoji-img"></p>
+// I ❤️ marked! 🎉
+```
+
+## Unicode example
+
+```js
+const options = {
+	emojis: {
+		"heart": "❤️",
+		"tada": "🎉"
+	},
+	renderer: (token) => token.emoji
 };
 
 marked.use(markedEmoji(options));
@@ -40,10 +60,27 @@ marked.parse("I :heart: marked! :tada:");
 // <p>I ❤️ marked! 🎉</p>
 ```
 
+## Font Awesome example
+
+```js
+const options = {
+	emojis: {
+		"heart": "fa-heart",
+		"tada": "fa-tada"
+	},
+	renderer: (token) => `<i class="fa-solid ${token.emoji}"></i>`
+};
+
+marked.use(markedEmoji(options));
+
+marked.parse("I :heart: marked! :tada:");
+// <p>I <i class="fa-solid fa-heart"></i> marked! <i class="fa-solid fa-tada"></i></p>
+// I ❤️ marked! 🎉
+```
+
 ## `options`
 
 | option | default | description |
 |--------|---------|-------------|
 | emojis | required | An object with keys as emoji name and values as emoji. The values are assumed to be image urls (as returned by Octokit) unless `unicode` option is `true`. Values can also be an object with a `url` property or `char` property to allow unicode and url emoji at the same time. |
-| unicode | `false` | Whether `emojis` values are image urls (`false`) or unicode characters (`true`). If set to `true`, an `<img>` element with class `marked-emoji-img` will be generated. |
-
+| renderer | null | A function that takes a token object and renders a string. |

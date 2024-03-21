@@ -1,6 +1,7 @@
 const defaultOptions = {
   // emojis: {}, required
-  unicode: false
+  unicode: false, // deprecated
+  renderer: undefined
 };
 
 export function markedEmoji(options) {
@@ -54,6 +55,10 @@ export function markedEmoji(options) {
         };
       },
       renderer(token) {
+        if (options.renderer) {
+          return options.renderer(token);
+        }
+
         if (token.unicode) {
           return token.emoji;
         } else {
