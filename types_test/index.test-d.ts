@@ -14,6 +14,7 @@ markedEmoji({emojis: {0: '❤️'}});
 // Valid arguments
 markedEmoji({emojis: {heart: 'https://example.com/heart.png'}});
 markedEmoji({emojis: {heart: '❤️'}, unicode: true});
+markedEmoji({emojis: {heart: '❤️'}, renderer: (token) => token.emoji});
 markedEmoji({emojis: {heart: 'https://example.com/heart.png'}, unicode: false});
 markedEmoji({emojis: {heart: 'https://example.com/heart.png'}, unicode: undefined});
 // This works because TypeScript can't exclude empty object when keys are dynamic
