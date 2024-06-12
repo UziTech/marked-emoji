@@ -1,6 +1,6 @@
 {
   "name": "marked-emoji",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Add text emoji support to marked",
   "main": "./lib/index.cjs",
   "module": "./src/index.js",
