@@ -5,7 +5,7 @@ import { throttling } from '@octokit/plugin-throttling';
 import { readFile } from 'node:fs/promises';
 
 const unicodeEmojis = JSON.parse(
-  await readFile(new URL('./fixtures/emojis.json', import.meta.url))
+  await readFile(new URL('./fixtures/emojis.json', import.meta.url)),
 );
 
 const MyOctokit = Octokit.plugin(throttling);
@@ -13,7 +13,7 @@ const octokit = new MyOctokit({
   throttle: {
     onRateLimit: (retryAfter, options) => {
       octokit.log.warn(
-        `Request quota exhausted for request ${options.method} ${options.url}`
+        `Request quota exhausted for request ${options.method} ${options.url}`,
       );
 
       // Retry five times after hitting a rate limit error, then give up
@@ -25,10 +25,10 @@ const octokit = new MyOctokit({
     onSecondaryRateLimit: (retryAfter, options, octokit) => {
       // does not retry, only logs a warning
       octokit.log.warn(
-        `Secondary quota detected for request ${options.method} ${options.url}`
+        `Secondary quota detected for request ${options.method} ${options.url}`,
       );
-    }
-  }
+    },
+  },
 });
 const res = await octokit.rest.emojis.get();
 const octokitEmojis = res.data;
@@ -47,7 +47,7 @@ describe('marked-emoji', () => {
   test('unicode emojis unicode', () => {
     marked.use(markedEmoji({
       emojis: unicodeEmojis,
-      unicode: true
+      unicode: true,
     }));
     expect(marked('I :heart: marked! :tada:')).toBe('<p>I ❤️ marked! 🎉</p>\n');
   });
@@ -55,14 +55,14 @@ describe('marked-emoji', () => {
   test('no emojis', () => {
     marked.use(markedEmoji({
       emojis: unicodeEmojis,
-      unicode: true
+      unicode: true,
     }));
     expect(marked('this is an :invalidemoji:')).toBe('<p>this is an :invalidemoji:</p>\n');
   });
 
   test('octokit emojis', () => {
     marked.use(markedEmoji({
-      emojis: octokitEmojis
+      emojis: octokitEmojis,
     }));
     expect(marked('I :heart: marked! :tada:')).toBe('<p>I <img alt="heart" src="https://github.githubassets.com/images/icons/emoji/unicode/2764.png?v8" class="marked-emoji-img"> marked! <img alt="tada" src="https://github.githubassets.com/images/icons/emoji/unicode/1f389.png?v8" class="marked-emoji-img"></p>\n');
   });
@@ -70,7 +70,7 @@ describe('marked-emoji', () => {
   test('gfm autolink works', () => {
     marked.use(markedEmoji({
       emojis: unicodeEmojis,
-      unicode: true
+      unicode: true,
     }));
     marked.use({ gfm: true });
     expect(marked('autolink https://github.com/UziTech/marked-emoji/')).toBe('<p>autolink <a href="https://github.com/UziTech/marked-emoji/">https://github.com/UziTech/marked-emoji/</a></p>\n');
@@ -79,7 +79,7 @@ describe('marked-emoji', () => {
   test('gfm 2 autolinks works', () => {
     marked.use(markedEmoji({
       emojis: unicodeEmojis,
-      unicode: true
+      unicode: true,
     }));
     marked.use({ gfm: true });
     expect(marked('autolink https://github.com/UziTech/marked-emoji/ https://github.com/UziTech/marked-emoji/')).toBe('<p>autolink <a href="https://github.com/UziTech/marked-emoji/">https://github.com/UziTech/marked-emoji/</a> <a href="https://github.com/UziTech/marked-emoji/">https://github.com/UziTech/marked-emoji/</a></p>\n');
@@ -90,9 +90,9 @@ describe('marked-emoji', () => {
       emojis: {
         heart: '❤️',
         heartUrl: { url: 'https://example.com/heart.png' },
-        heartUnicode: { char: '💖' }
+        heartUnicode: { char: '💖' },
       },
-      unicode: true
+      unicode: true,
     }));
     marked.use({ gfm: true });
     expect(marked(':heart: :heartUrl: :heartUnicode:')).toBe('<p>❤️ <img alt="heartUrl" src="https://example.com/heart.png" class="marked-emoji-img"> 💖</p>\n');
@@ -100,7 +100,7 @@ describe('marked-emoji', () => {
 
   test('invalid emoji object', () => {
     marked.use(markedEmoji({
-      emojis: { test: { nothing: '' } }
+      emojis: { test: { nothing: '' } },
     }));
     marked.use({ gfm: true });
     expect(marked(':test:')).toBe('<p>:test:</p>\n');
@@ -109,7 +109,7 @@ describe('marked-emoji', () => {
   test('renderer option', () => {
     marked.use(markedEmoji({
       emojis: unicodeEmojis,
-      renderer: (token) => token.emoji
+      renderer: (token) => token.emoji,
     }));
     expect(marked('I :heart: marked! :tada:')).toBe('<p>I ❤️ marked! 🎉</p>\n');
   });
@@ -117,7 +117,7 @@ describe('marked-emoji', () => {
   test('image renderer', () => {
     marked.use(markedEmoji({
       emojis: octokitEmojis,
-      renderer: (token) => `<img alt="${token.name}" src="${token.emoji}" class="img-class">`
+      renderer: (token) => `<img alt="${token.name}" src="${token.emoji}" class="img-class">`,
     }));
     expect(marked('I :heart: marked! :tada:')).toBe('<p>I <img alt="heart" src="https://github.githubassets.com/images/icons/emoji/unicode/2764.png?v8" class="img-class"> marked! <img alt="tada" src="https://github.githubassets.com/images/icons/emoji/unicode/1f389.png?v8" class="img-class"></p>\n');
   });
@@ -126,9 +126,9 @@ describe('marked-emoji', () => {
     marked.use(markedEmoji({
       emojis: {
         heart: 'fa-heart',
-        tada: 'fa-tada'
+        tada: 'fa-tada',
       },
-      renderer: (token) => `<i class="fa-solid ${token.emoji}"></i>`
+      renderer: (token) => `<i class="fa-solid ${token.emoji}"></i>`,
     }));
     expect(marked('I :heart: marked! :tada:')).toBe('<p>I <i class="fa-solid fa-heart"></i> marked! <i class="fa-solid fa-tada"></i></p>\n');
   });

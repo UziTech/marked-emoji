@@ -1,13 +1,13 @@
 const defaultOptions = {
   // emojis: {}, required
   unicode: false, // deprecated
-  renderer: undefined
+  renderer: undefined,
 };
 
 export function markedEmoji(options) {
   options = {
     ...defaultOptions,
-    ...options
+    ...options,
   };
 
   if (!options.emojis) {
@@ -51,7 +51,7 @@ export function markedEmoji(options) {
           raw: match[0],
           name,
           emoji,
-          unicode
+          unicode,
         };
       },
       renderer(token) {
@@ -64,7 +64,7 @@ export function markedEmoji(options) {
         } else {
           return `<img alt="${token.name}" src="${token.emoji}" class="marked-emoji-img">`;
         }
-      }
-    }]
+      },
+    }],
   };
 }
