@@ -44,6 +44,13 @@ describe('marked-emoji', () => {
     }).toThrow('Must provide emojis to markedEmoji');
   });
 
+  test('null emojis', () => {
+    marked.use(markedEmoji({
+      emojis: { test: null },
+    }));
+    expect(marked('this is an :test:')).toBe('<p>this is an :test:</p>\n');
+  });
+
   test('no emojis', () => {
     marked.use(markedEmoji({
       emojis: unicodeEmojis,
