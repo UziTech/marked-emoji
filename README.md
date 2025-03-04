@@ -82,12 +82,12 @@ marked.parse("I :heart: marked! :tada:");
 
 | option | default | description |
 |--------|---------|-------------|
-| emojis | required | An object with keys as emoji name and values as emoji. |
+| emojis | required | An object with keys as emoji name and values as emoji. The value will be passed directly to the renderer as the `token.emoji` property |
 | renderer | Octokit renderer: ``(token) => `<img alt="${token.name}" src="${token.emoji}" class="marked-emoji-img">` `` | A function that takes a token object and renders a string. |
 
 ## `token`
 
 | property | type | description |
 |----------|------|-------------|
-| emoji | string | The emoji value. |
+| emoji | any | The emoji value. |
 | name | string | The emoji name. |
