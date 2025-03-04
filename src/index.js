@@ -1,6 +1,5 @@
 const defaultOptions = {
   // emojis: {}, required
-  unicode: false, // deprecated
   renderer: undefined,
 };
 
@@ -30,20 +29,10 @@ export function markedEmoji(options) {
         }
 
         const name = match[1];
-        let emoji = options.emojis[name];
-        let unicode = options.renderer ? undefined : options.unicode;
+        const emoji = options.emojis[name];
 
-        if (typeof emoji !== 'string' && !options.renderer) {
-          if (typeof emoji.char === 'string') {
-            emoji = emoji.char;
-            unicode = true;
-          } else if (typeof emoji.url === 'string') {
-            emoji = emoji.url;
-            unicode = false;
-          } else {
-            // invalid emoji
-            return;
-          }
+        if (!emoji) {
+          return;
         }
 
         return {
@@ -51,7 +40,6 @@ export function markedEmoji(options) {
           raw: match[0],
           name,
           emoji,
-          unicode,
         };
       },
       renderer(token) {
@@ -59,11 +47,7 @@ export function markedEmoji(options) {
           return options.renderer(token);
         }
 
-        if (token.unicode) {
-          return token.emoji;
-        } else {
-          return `<img alt="${token.name}" src="${token.emoji}" class="marked-emoji-img">`;
-        }
+        return `<img alt="${token.name}" src="${token.emoji}" class="marked-emoji-img">`;
       },
     }],
   };
