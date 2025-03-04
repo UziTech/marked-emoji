@@ -46,7 +46,10 @@ describe('marked-emoji', () => {
 
   test('null emojis', () => {
     marked.use(markedEmoji({
-      emojis: { undefined: undefined , null: null},
+      emojis: {
+        undefined,
+        null: null,
+      },
     }));
     expect(marked('this is an :undefined: and :null: emoji')).toBe('<p>this is an :undefined: and :null: emoji</p>\n');
   });
