@@ -81,8 +81,8 @@ describe('marked-emoji', () => {
         heartUrl: { url: 'https://example.com/heart.png' },
         heartUnicode: { char: '💖' },
       },
-      renderer({name, emoji}) {
-        if (typeof emoji === "string") {
+      renderer({ name, emoji }) {
+        if (typeof emoji === 'string') {
           return emoji;
         }
 
@@ -90,8 +90,8 @@ describe('marked-emoji', () => {
           return emoji.char;
         }
 
-        return `<img alt="${name}" src="${emoji.url}" class="marked-emoji-img">`
-      }
+        return `<img alt="${name}" src="${emoji.url}" class="marked-emoji-img">`;
+      },
     }));
     marked.use({ gfm: true });
     expect(marked(':heart: :heartUrl: :heartUnicode:')).toBe('<p>❤️ <img alt="heartUrl" src="https://example.com/heart.png" class="marked-emoji-img"> 💖</p>\n');

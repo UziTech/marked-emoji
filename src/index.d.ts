@@ -1,19 +1,19 @@
 declare module 'marked-emoji' {
 
-    /**
+  /**
      * Token sent to the renderer
      */
-    interface EmojiToken<T> {
-      type: 'emoji';
-      raw: string;
-      name: string;
-      emoji: T;
-    }
+  interface EmojiToken<T> {
+    type: 'emoji';
+    raw: string;
+    name: string;
+    emoji: T;
+  }
 
     /**
      * Options for configuring the marked-emojis extension
      */
-    type MarkedEmojiOptions<T>  = {
+    type MarkedEmojiOptions<T> = {
       /**
        * An object with keys as emoji name and values are assumed to be image urls (as returned by Octokit).
        */
@@ -28,7 +28,7 @@ declare module 'marked-emoji' {
        * Renderer function to render emoji
        */
       renderer(token: EmojiToken<T>): string;
-    }
+    };
 
     /**
      * Configures a marked extension to parse `:emoji:` as images or any registered.

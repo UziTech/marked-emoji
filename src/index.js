@@ -29,7 +29,7 @@ export function markedEmoji(options) {
         }
 
         const name = match[1];
-        let emoji = options.emojis[name];
+        const emoji = options.emojis[name];
 
         if (!emoji) {
           return;
