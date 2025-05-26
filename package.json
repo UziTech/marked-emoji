@@ -45,7 +45,7 @@
   },
   "devDependencies": {
     "@markedjs/eslint-config": "^1.0.12",
-    "@octokit/plugin-throttling": "^10.0.0",
+    "@octokit/plugin-throttling": "^11.0.1",
     "@octokit/rest": "^22.0.0",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/commit-analyzer": "^13.0.1",
