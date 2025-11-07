@@ -41,7 +41,7 @@
   },
   "homepage": "https://github.com/UziTech/marked-emoji#readme",
   "peerDependencies": {
-    "marked": ">=4 <17"
+    "marked": ">=4 <18"
   },
   "devDependencies": {
     "@markedjs/eslint-config": "^1.0.13",
@@ -53,11 +53,10 @@
     "@semantic-release/github": "^12.0.1",
     "@semantic-release/npm": "^13.1.1",
     "@semantic-release/release-notes-generator": "^14.1.0",
-    "@types/marked": "^6.0.0",
     "eslint": "^9.39.0",
     "globals": "^16.5.0",
     "jest-cli": "^30.2.0",
-    "marked": "^16.4.1",
+    "marked": "^17.0.0",
     "rollup": "^4.52.5",
     "semantic-release": "^25.0.1",
     "tsd": "^0.33.0"
