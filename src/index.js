@@ -3,6 +3,14 @@ const defaultOptions = {
   renderer: undefined,
 };
 
+function escapeRegExp(string) {
+  if (RegExp.escape) {
+    // Available in node v24
+    return RegExp.escape(string);
+  }
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 export function markedEmoji(options) {
   options = {
     ...defaultOptions,
@@ -13,9 +21,14 @@ export function markedEmoji(options) {
     throw new Error('Must provide emojis to markedEmoji');
   }
 
-  const emojiNames = Object.keys(options.emojis).map(e => e.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|');
-  const emojiRegex = new RegExp(`:(${emojiNames}):`);
-  const tokenizerRule = new RegExp(`^${emojiRegex.source}`);
+  const emojis = {};
+  for (const [name, emoji] of Object.entries(options.emojis)) {
+    emojis[name.toLowerCase()] = emoji;
+  }
+
+  const emojiNames = Object.keys(emojis).map(e => escapeRegExp(e)).join('|');
+  const emojiRegex = new RegExp(`:(${emojiNames}):`, 'i');
+  const tokenizerRule = new RegExp(`^${emojiRegex.source}`, 'i');
 
   return {
     extensions: [{
@@ -29,7 +42,7 @@ export function markedEmoji(options) {
         }
 
         const name = match[1];
-        const emoji = options.emojis[name];
+        const emoji = emojis[name.toLowerCase()];
 
         if (!emoji) {
           return;
