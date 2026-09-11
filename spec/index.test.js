@@ -162,4 +162,40 @@ describe('marked-emoji', () => {
     }));
     expect(marked('I :HEART: marked! :Tada:')).toBe('<p>I <img alt="HEART" src="https://github.githubassets.com/images/icons/emoji/unicode/2764.png?v8" class="marked-emoji-img"> marked! <img alt="Tada" src="https://github.githubassets.com/images/icons/emoji/unicode/1f389.png?v8" class="marked-emoji-img"></p>\n');
   });
+
+  test('escape regex with RegExp.escape', () => {
+    const originalEscape = RegExp.escape;
+    RegExp.escape = RegExp.escape || ((string) => string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+    try {
+      marked.use(markedEmoji({
+        emojis: {
+          'test+emoji': '👍',
+        },
+      }));
+      expect(marked('I :test+emoji: marked!')).toBe('<p>I <img alt="test+emoji" src="👍" class="marked-emoji-img"> marked!</p>\n');
+    } finally {
+      if (originalEscape) {
+        RegExp.escape = originalEscape;
+      } else {
+        delete RegExp.escape;
+      }
+    }
+  });
+
+  test('escape regex without RegExp.escape', () => {
+    const originalEscape = RegExp.escape;
+    delete RegExp.escape;
+    try {
+      marked.use(markedEmoji({
+        emojis: {
+          'test+emoji': '👍',
+        },
+      }));
+      expect(marked('I :test+emoji: marked!')).toBe('<p>I <img alt="test+emoji" src="👍" class="marked-emoji-img"> marked!</p>\n');
+    } finally {
+      if (originalEscape) {
+        RegExp.escape = originalEscape;
+      }
+    }
+  });
 });
