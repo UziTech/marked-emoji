@@ -1,3 +1,5 @@
+import { describe, test, beforeEach } from 'node:test';
+import assert from 'node:assert';
 import { marked } from 'marked';
 import { markedEmoji } from '../src/index.js';
 import { Octokit } from '@octokit/rest';
@@ -39,9 +41,9 @@ describe('marked-emoji', () => {
   });
 
   test('invalid emojis option', () => {
-    expect(() => {
+    assert.throws(() => {
       marked.use(markedEmoji());
-    }).toThrow('Must provide emojis to markedEmoji');
+    }, { message: 'Must provide emojis to markedEmoji' });
   });
 
   test('null emojis', () => {
@@ -51,21 +53,21 @@ describe('marked-emoji', () => {
         null: null,
       },
     }));
-    expect(marked('this is an :undefined: and :null: emoji')).toBe('<p>this is an :undefined: and :null: emoji</p>\n');
+    assert.strictEqual(marked('this is an :undefined: and :null: emoji'), '<p>this is an :undefined: and :null: emoji</p>\n');
   });
 
   test('no emojis', () => {
     marked.use(markedEmoji({
       emojis: unicodeEmojis,
     }));
-    expect(marked('this is an :invalidemoji:')).toBe('<p>this is an :invalidemoji:</p>\n');
+    assert.strictEqual(marked('this is an :invalidemoji:'), '<p>this is an :invalidemoji:</p>\n');
   });
 
   test('octokit emojis', () => {
     marked.use(markedEmoji({
       emojis: octokitEmojis,
     }));
-    expect(marked('I :heart: marked! :tada:')).toBe('<p>I <img alt="heart" src="https://github.githubassets.com/images/icons/emoji/unicode/2764.png?v8" class="marked-emoji-img"> marked! <img alt="tada" src="https://github.githubassets.com/images/icons/emoji/unicode/1f389.png?v8" class="marked-emoji-img"></p>\n');
+    assert.strictEqual(marked('I :heart: marked! :tada:'), '<p>I <img alt="heart" src="https://github.githubassets.com/images/icons/emoji/unicode/2764.png?v8" class="marked-emoji-img"> marked! <img alt="tada" src="https://github.githubassets.com/images/icons/emoji/unicode/1f389.png?v8" class="marked-emoji-img"></p>\n');
   });
 
   test('gfm autolink works', () => {
@@ -73,7 +75,7 @@ describe('marked-emoji', () => {
       emojis: unicodeEmojis,
     }));
     marked.use({ gfm: true });
-    expect(marked('autolink https://github.com/UziTech/marked-emoji/')).toBe('<p>autolink <a href="https://github.com/UziTech/marked-emoji/">https://github.com/UziTech/marked-emoji/</a></p>\n');
+    assert.strictEqual(marked('autolink https://github.com/UziTech/marked-emoji/'), '<p>autolink <a href="https://github.com/UziTech/marked-emoji/">https://github.com/UziTech/marked-emoji/</a></p>\n');
   });
 
   test('gfm 2 autolinks works', () => {
@@ -81,7 +83,7 @@ describe('marked-emoji', () => {
       emojis: unicodeEmojis,
     }));
     marked.use({ gfm: true });
-    expect(marked('autolink https://github.com/UziTech/marked-emoji/ https://github.com/UziTech/marked-emoji/')).toBe('<p>autolink <a href="https://github.com/UziTech/marked-emoji/">https://github.com/UziTech/marked-emoji/</a> <a href="https://github.com/UziTech/marked-emoji/">https://github.com/UziTech/marked-emoji/</a></p>\n');
+    assert.strictEqual(marked('autolink https://github.com/UziTech/marked-emoji/ https://github.com/UziTech/marked-emoji/'), '<p>autolink <a href="https://github.com/UziTech/marked-emoji/">https://github.com/UziTech/marked-emoji/</a> <a href="https://github.com/UziTech/marked-emoji/">https://github.com/UziTech/marked-emoji/</a></p>\n');
   });
 
   test('emoji passed to renderer', () => {
@@ -104,7 +106,7 @@ describe('marked-emoji', () => {
       },
     }));
     marked.use({ gfm: true });
-    expect(marked(':heart: :heartUrl: :heartUnicode:')).toBe('<p>❤️ <img alt="heartUrl" src="https://example.com/heart.png" class="marked-emoji-img"> 💖</p>\n');
+    assert.strictEqual(marked(':heart: :heartUrl: :heartUnicode:'), '<p>❤️ <img alt="heartUrl" src="https://example.com/heart.png" class="marked-emoji-img"> 💖</p>\n');
   });
 
   test('renderer option', () => {
@@ -112,7 +114,7 @@ describe('marked-emoji', () => {
       emojis: unicodeEmojis,
       renderer: (token) => token.emoji,
     }));
-    expect(marked('I :heart: marked! :tada:')).toBe('<p>I ❤️ marked! 🎉</p>\n');
+    assert.strictEqual(marked('I :heart: marked! :tada:'), '<p>I ❤️ marked! 🎉</p>\n');
   });
 
   test('image renderer', () => {
@@ -120,7 +122,7 @@ describe('marked-emoji', () => {
       emojis: octokitEmojis,
       renderer: (token) => `<img alt="${token.name}" src="${token.emoji}" class="img-class">`,
     }));
-    expect(marked('I :heart: marked! :tada:')).toBe('<p>I <img alt="heart" src="https://github.githubassets.com/images/icons/emoji/unicode/2764.png?v8" class="img-class"> marked! <img alt="tada" src="https://github.githubassets.com/images/icons/emoji/unicode/1f389.png?v8" class="img-class"></p>\n');
+    assert.strictEqual(marked('I :heart: marked! :tada:'), '<p>I <img alt="heart" src="https://github.githubassets.com/images/icons/emoji/unicode/2764.png?v8" class="img-class"> marked! <img alt="tada" src="https://github.githubassets.com/images/icons/emoji/unicode/1f389.png?v8" class="img-class"></p>\n');
   });
 
   test('font-awesome renderer', () => {
@@ -131,6 +133,6 @@ describe('marked-emoji', () => {
       },
       renderer: (token) => `<i class="fa-solid ${token.emoji}"></i>`,
     }));
-    expect(marked('I :heart: marked! :tada:')).toBe('<p>I <i class="fa-solid fa-heart"></i> marked! <i class="fa-solid fa-tada"></i></p>\n');
+    assert.strictEqual(marked('I :heart: marked! :tada:'), '<p>I <i class="fa-solid fa-heart"></i> marked! <i class="fa-solid fa-tada"></i></p>\n');
   });
 });
